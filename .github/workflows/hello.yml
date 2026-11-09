@@ -1,32 +1,28 @@
 
-name: Premier workflow CI
+name: CI - Tests Python
 
 on:
   push:
-  workflow_dispatch:
 
 jobs:
-  hello:
+  tests:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Afficher un message
-        run: echo "Hello from GitHub Actions"
+      - name: Recuperer le code
+        uses: actions/checkout@v4
 
-      - name: Afficher les informations du runner
+      - name: Configurer Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Installer les dependances
         run: |
-          python --version
-          pwd
-          ls -la
-      
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
 
-      - name: Informations Git
+      - name: Executer les tests avec couverture
+        working-directory: ./tp_tests
         run: |
-          echo "Branche : $GITHUB_REF_NAME"
-          echo "Commit : $GITHUB_SHA"
-          echo "Événement : $GITHUB_EVENT_NAME"
-      - name: Test corrige
-        run: exit 0
-
-      - name: Etape apres erreur
-        run: echo "Cette étape ne sera pas exécutée"
+          python -m pytest -v --cov=app --cov-report=term-missing
