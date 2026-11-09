@@ -25,8 +25,8 @@ jobs:
           echo "Branche : $GITHUB_REF_NAME"
           echo "Commit : $GITHUB_SHA"
           echo "Événement : $GITHUB_EVENT_NAME"
-      - name: Erreur volontaire
-        run: exit 1
+      - name: Test corrige
+        run: exit 0
 
       - name: Etape apres erreur
         run: echo "Cette étape ne sera pas exécutée"
