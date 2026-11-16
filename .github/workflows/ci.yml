@@ -22,7 +22,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements-dev.txt
 
-      - name: Executer les tests avec couverture
+      - name: Executer les tests avec Pytest et couverture
         working-directory: ./tp_tests
         run: |
           python -m pytest -v --cov=app --cov-report=term-missing
